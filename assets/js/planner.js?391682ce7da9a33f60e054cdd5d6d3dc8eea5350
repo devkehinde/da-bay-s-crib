@@ -1,0 +1,183 @@
+;(function(Extensions) {
+    Extensions.Inst = Extensions.Inst || {};
+
+    window.addEvent('domready',function(){
+        new Planner();
+    });
+
+    var Planner = new Class({
+        form: undefined,
+        fieldsets: [],
+        response: undefined,
+        error_messages: [],
+
+        initialize: function(){
+            this.confirm_navigation = this.confirm_navigation.bind(this);
+
+            this.get_form();
+            this.get_fieldsets();
+            this.get_initial_form_data();
+            this.events();
+        },
+
+        get_form: function(){
+            this.form = document.getElement('form[action="/planner/save"]');
+        },
+
+        get_fieldsets: function(){
+            this.fieldsets = this.form.getElements('fieldset');
+        },
+
+        get_initial_form_data: function(){
+          this.initial_form_data = this.form.toQueryString();
+        },
+
+        events: function(){
+            this.form.addEvent('submit',this.do_submit.bind(this));
+            this.form.getElement("input[name='company']").addEvent("blur", this.sendDimension.bind(this));
+            this.addBeforeUnload()
+        },
+
+        do_submit: function(){
+            this.recaptcha = this.recaptcha || this.form.getElement('.g-recaptcha');
+
+            if (this.recaptcha && (!window.grecaptcha || !window.grecaptcha.getResponse())) {
+              this.prompt_recaptcha();
+              return false;
+            }
+
+            this.error_messages.each(function(message){
+                message.dispose();
+            });
+            this.error_messages = [];
+            this.form.getElements('.error,.field-error').removeClass('error').removeClass('field-error');
+
+            this.isSubmitting = true;
+
+            new Request.JSON({
+                url: this.form.get('action'),
+                method: this.form.get('method'),
+                data: this.form.toQueryString(),
+                onSuccess: this.on_success.bind(this),
+                onFailure: this.on_fail.bind(this),
+                onError: this.on_fail.bind(this)
+            }).send();
+
+            return false;
+        },
+
+        sendDimension: function(event) {
+          // Send `company` as `dimension1` if field is filled out (using name field for now).
+          if (Extensions.Inst.Track) {
+            var companyField = this.form.getElement('input[name="name"]');
+            if (companyField && companyField.value) {
+              Extensions.Inst.Track.event("company", { "company": companyField.value });
+            }
+          }
+        },
+
+        on_fail: function(x){
+            this.isSubmitting = false;
+            console.log(x);
+            console.log(x.responseText);
+        },
+
+        addBeforeUnload: function(){
+          window.addEventListener('beforeunload', this.confirm_navigation);
+        },
+
+        removeBeforeUnload: function() {
+          window.removeEventListener('beforeunload', this.confirm_navigation);
+        },
+
+        on_success: function(response){
+          this.isSubmitting = false;
+          this.removeBeforeUnload();
+          this.response = response;
+          if ( this.response.success ) {
+              if (Extensions.Inst.Track) {
+                Extensions.Inst.Track.event('project submission', { event_category: 'contact' });
+              }
+              window.location = "/planner/thanks";
+          } else {
+              this.errors();
+          }
+        },
+
+        errors: function(){
+            var messages = messages = this.response.messages.clone(),
+                scroll_to = null,
+                first_error = null;
+            this.response.errors.each(function(field){
+                if ( field == 'SESSIONKEY_FORMKEY' ) return;
+                var elements = this.form.getElements('[name="'+ field +'"],[name="'+ field +'[]"]');
+                if ( elements.length > 0 ) {
+                    elements[0].getParents('fieldset').shift().addClass('error');
+                    if ( first_error === null ) {
+                        first_error = elements[0];
+                    }
+                }
+                if ( elements.length > 1 || elements.length == 0 ) return;
+                elements.shift().getParents('.form-el').shift().addClass('field-error');
+            }, this);
+
+			if (first_error != null) {
+				first_error.focus();
+				first_error.select();
+			}
+
+            this.fieldsets.each(function(fieldset){
+                var message;
+                if ( !fieldset.hasClass('error') ) return false;
+                if ( messages.length == 0 ) messages = this.response.messages.clone();
+
+                message = new Element('div').addClass('error');
+                message.set('html', messages.shift());
+
+                if (window.scaleSvgs) window.scaleSvgs();
+
+                fieldset.getElement('h2').grab( message , 'after' );
+                this.error_messages.push( message );
+                if ( scroll_to === null ) scroll_to = fieldset;
+            },this);
+
+			if (scroll_to != null) {
+				new Fx.Scroll( window , {duration: 400} ).start( 0 , scroll_to.getCoordinates().top - 20 );
+			}
+        },
+
+        confirm_navigation: function(e){
+          // Don't show message if unload was triggered by form submission.
+          if (this.isSubmitting || !this.has_changes()) {
+            return;
+          }
+
+          // Custom message not supported in many browsers, will often be replaced with default text.
+          e.returnValue = 'You didn’t finish, are you sure you want to navigate away?';
+          return e.returnValue;
+        },
+
+        // Check if the form is in a dirty state. Used to determine whether to block unload.
+        has_changes: function(){
+          // Remove reCAPTCHA param from form query string when checking equivalence. Otherwise initial form data may be
+          // set before reCAPTCHA initialises, and the addition of the reCAPTCHA fields would look like a manual data change.
+          recaptchaParamPattern = /&g-recaptcha-response(\=[^&]*)?(?=&|$)|^g-recaptcha-response(\=[^&]*)?(&|$)/;
+
+          // Check if current form data is different to initial form data.
+          return this.form.toQueryString().replace(recaptchaParamPattern, '') !== this.initial_form_data.replace(recaptchaParamPattern, '');
+        },
+
+        prompt_recaptcha: function() {
+          alert('Hold up! Please complete the reCAPTCHA validation.');
+
+          // Make sure recaptcha is visible.
+          this.recaptcha.scrollIntoView({ behavior: 'smooth' });
+
+          // Play highlight animation.
+          this.recaptcha.removeClass('is-highlighted');
+          setTimeout(function () {
+            this.recaptcha.addClass('is-highlighted');
+          }.bind(this), 250);
+        }
+    });
+})(window.Extensions || {});

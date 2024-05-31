@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Da Bay's Crib</title>
+  <link rel="stylesheet" href="styles.css">
+  <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+</head>
+
+<body>
+  <div class="wrapper">
+    <form action="">
+      <h1>Booking </h1>
+
+      <div class="input-box" style="text-align: center;">
+        <select class="table">
+          <option value="" class="table">Click to choose Table</option>
+          <option value="Table of Four" class="table">Table of Four</option>
+          <option value="Table of Eight" class="table">Table of Eight</option>
+          <option value="Individual ticket" class="table">Individual ticket</option>
+        </select>
+      </div>
+      <div class="input-box">
+        <input type="text" placeholder="name" class="name" required>
+        <!-- <i class='bx bxs-user'></i> -->
+      </div>
+      <div class="input-box">
+        <input type="email" placeholder="email" class="email" required>
+        <!-- <i class='bx bxs-mail-unread-sharp'></i> -->
+      </div>
+
+      <div class="input-box">
+        <input type="tel" placeholder="phone" class="phone" required>
+        <!-- <i class='bx bxs-lock-alt'></i> -->
+      </div>
+
+      <button type="button" class="btn" onclick="sendwhatsapp()">Connect to WhatsApp</button>
+
+    </form>
+  </div>
+
+  <script>
+    function sendwhatsapp() {
+      var phonenumber = "+2347043305067";
+
+      var table = document.querySelector(".table").value;
+      var name = document.querySelector(".name").value;
+      var email = document.querySelector(".email").value;
+      var phone = document.querySelector(".phone").value;
+
+      var url = "https://wa.me/" + phonenumber + "?text="
+        + "*Table :* " + table + "%0a"
+        + "*Name :* " + name + "%0a"
+        + "*Email:* " + email + "%0a"
+        + "*Phone :* " + phone
+        + "%0a%0a"
+        + "";
+
+      window.open(url, '_blank').focus();
+    }
+  </script>
+</body>
+
+</html>
