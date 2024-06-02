@@ -148,7 +148,7 @@ html {
   overflow-y: scroll;
   -webkit-text-size-adjust: 100%;
   -ms-text-size-adjust: 100%;
-  background-color: #fff;
+  background-color: #ee6557;
 }
 body {
   text-align: center;
@@ -190,7 +190,7 @@ textarea ::-moz-selection {
   color: #fff;
 }
 #page-border {
-  background: #f5f5f5;
+  background: #ee6557;
   margin: 20px;
 }
 strong {
@@ -726,7 +726,7 @@ p.secondary,
   *display: inline;
   float: none;
   height: 275px;
-  background-color: #c5c5c5;
+  background-color: #fff;
 }
 .list-blocks.instagram li {
   max-width: 612px;
@@ -801,7 +801,7 @@ p.secondary,
   -o-transition: none 1s;
   -webkit-transition: none 1s;
   transition: none 1s;
-  background-color: #f5f5f5;
+  background-color: #ee6557;
   background-repeat: no-repeat;
   background-position: 50% 50%;
   -moz-background-size: auto 220px;
@@ -1489,7 +1489,7 @@ button:focus,
 .button:active,
 .button:focus {
   color: #fff;
-  background-color: #181818;
+  background-color: #fff;
 }
 button.active,
 .button.active {
@@ -1507,7 +1507,7 @@ button.secondary:focus,
 .button.secondary:hover,
 .button.secondary:active,
 .button.secondary:focus {
-  background-color: #181818;
+  background-color: #fff;
   color: #fff;
 }
 button.secondary.active,
@@ -1766,7 +1766,7 @@ html.touch .custom-radio:focus,
 html.touch .custom-checkbox:hover,
 html.touch .custom-checkbox:active,
 html.touch .custom-checkbox:focus {
-  background: #c5c5c5;
+  background: #fff;
 }
 html.touch .custom-radio.active,
 html.touch .custom-radio .info {
@@ -1831,7 +1831,7 @@ html.touch .custom-checkbox .info {
 .custom-select.active,
 .custom-select .info {
   background-color: #fff;
-  color: #aaa;
+  color: #fff;
 }
 .custom-select:hover i,
 .custom-select:focus i,
@@ -1918,7 +1918,7 @@ a:hover .circ.invert,
 a:focus .circ.invert,
 a:active .circ.invert {
   color: #16a6b6;
-  background-color: rgba(255, 255, 255, 0.55);
+  background-color: #fff;
 }
 a:hover .circ.invert .icon__border,
 a:focus .circ.invert .icon__border,
@@ -1947,34 +1947,34 @@ a:hover .circ.secondary.invert,
 a:focus .circ.secondary.invert,
 a:active .circ.secondary.invert {
   color: #ee6557;
-  background-color: rgba(255, 255, 255, 0.55);
+  background-color: #fff;
 }
 .circ.secondary.invert .icon__border {
   color: #ee6557;
 }
 .circ.tertiary {
-  color: #adadad;
+  color: #fff;
 }
 a:hover .circ.tertiary,
 a:focus .circ.tertiary,
 a:active .circ.tertiary {
-  background-color: #adadad;
+  background-color: #fff;
 }
 .circ.tertiary .icon__border {
-  color: #adadad;
+  color: #fff;
 }
 .circ.tertiary.invert {
   color: #fff;
-  background-color: #adadad;
+  background-color: #fff;
 }
 a:hover .circ.tertiary.invert,
 a:focus .circ.tertiary.invert,
 a:active .circ.tertiary.invert {
-  color: #adadad;
-  background-color: rgba(255, 255, 255, 0.55);
+  color: #fff;
+  background-color: #fff;
 }
 .circ.tertiary.invert .icon__border {
-  color: #adadad;
+  color: #fff;
 }
 .circ.large {
   width: 120px;
@@ -2048,7 +2048,7 @@ a:active .circ.tertiary.invert {
   background: 0 0;
 }
 .slider-regular li {
-  background-color: #f5f5f5;
+  background-color: #ee6557;
 }
 .review {
   text-align: left;
@@ -3900,13 +3900,13 @@ html body .mq-wide-i-block {
   padding-left: 0 !important;
 }
 .colour-bg {
-  color: #f5f5f5 !important;
+  color: #ee6557 !important;
 }
 .colour-body {
-  color: #6b6b6b !important;
+  color: #fff !important;
 }
 .colour-mid-dark {
-  color: #6a6a65 !important;
+  color: #fff !important;
 }
 .clearfix,
 .container,
