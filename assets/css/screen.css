@@ -484,7 +484,7 @@ textarea:first-child,
 .subsection {
   padding-top: 40px;
   padding-bottom: 60px;
-  border-top: 1px solid #6a6a65;
+  border-top: 1px solid #fff;
 }
 .pseudo-link,
 a {
@@ -494,7 +494,7 @@ a {
   transition: all 275ms;
   cursor: pointer;
   text-decoration: none;
-  color: #181818;
+  color: #fff;
   border-bottom: 1px solid #16a6b6;
 }
 .pseudo-link:hover,
@@ -505,7 +505,7 @@ a:hover,
 a:focus,
 a:active,
 a.active {
-  color: #16a6b6;
+  color: #fff;
 }
 .pseudo-link:hover .pseudo-link,
 .pseudo-link:focus .pseudo-link,
@@ -927,11 +927,11 @@ p.secondary,
 }
 .list-hex-grid div.hex.tertiary > a,
 .list-hex-grid div.hex.tertiary > div {
-  background-color: #b3b3b3;
+  background-color: #fff;
 }
 .list-hex-grid div.hex.tertiary .after {
-  background-color: #b3b3b3;
-  border-color: #b3b3b3;
+  background-color: #fff;
+  border-color: #fff;
 }
 .list-hex-grid div.hex.quaternary > a,
 .list-hex-grid div.hex.quaternary > div {
@@ -1607,10 +1607,10 @@ textarea {
   min-height: 100px;
 }
 ::-webkit-input-placeholder {
-  color: #aaa;
+  color: #fff;
 }
 :-moz-placeholder {
-  color: #aaa;
+  color: #fff;
 }
 .placeholder-wrap {
   z-index: 1;
@@ -1645,7 +1645,7 @@ textarea {
   height: 100%;
   padding: 0 6px 0 7px;
   background: 0 0;
-  color: #c5c5c5;
+  color: #fff;
 }
 .input-wrap button:hover,
 .input-wrap button:active,
